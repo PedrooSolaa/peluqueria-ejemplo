@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- viewport-fit=cover permite usar toda la pantalla en iPhone con notch -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Peluquería Ejemplo · La Legua, Toledo</title>
+    <meta name="description" content="Peluquería en La Legua (Toledo). Corte, color y mechas. Reserva por WhatsApp.">
+
+    <!-- Fuentes de Google: Fraunces (títulos) e Inter (texto) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --crema: #f5f0e8;
+            --tinta: #1e1a17;
+            --acento: #9c4a2f;
+            --suave: #6b625a;
+            --linea: #d8cfc3;
+            color-scheme: light;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Evita que el iPhone agrande el texto al girar la pantalla */
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--crema);
+            color: var(--tinta);
+            line-height: 1.65;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Fraunces', serif;
+            font-weight: 400;
+            line-height: 1.15;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .wrap {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        section {
+            padding: 56px 0;
+        }
+
+        .etiqueta {
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            font-size: .75rem;
+            color: var(--acento);
+            margin-bottom: 12px;
+        }
+
+        /* Cabecera: en móvil el logo y el menú se apilan; en pantallas anchas van en una línea */
+        header .wrap {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px 24px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-family: 'Fraunces', serif;
+            font-size: 1.3rem;
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 4px 20px;
+            flex-wrap: wrap;
+        }
+
+        /* padding alto = zona táctil cómoda para el dedo */
+        nav a {
+            text-decoration: none;
+            font-size: .9rem;
+            color: var(--suave);
+            padding: 8px 0;
+        }
+
+        nav a:hover {
+            color: var(--acento);
+        }
+
+        /* Portada */
+        .portada {
+            display: grid;
+            gap: 32px;
+            align-items: center;
+            padding-top: 24px;
+        }
+
+        .portada>* {
+            min-width: 0;
+        }
+
+        .portada h1 {
+            font-size: clamp(2.2rem, 7vw, 3.6rem);
+            margin-bottom: 20px;
+        }
+
+        .portada p {
+            color: var(--suave);
+            max-width: 44ch;
+            margin-bottom: 28px;
+        }
+
+        .boton {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--tinta);
+            color: var(--crema);
+            padding: 15px 26px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: .95rem;
+        }
+
+        .boton:hover {
+            background: var(--acento);
+        }
+
+        /* Huecos de foto: sustituir por <img> reales */
+        .img {
+            background: #d9cfc2;
+            width: 100%;
+        }
+
+        .vertical {
+            aspect-ratio: 4 / 5;
+        }
+
+        .horizontal {
+            aspect-ratio: 4 / 3;
+        }
+
+        .img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Servicios como carta */
+        h2 {
+            font-size: clamp(1.8rem, 5vw, 2.4rem);
+            margin-bottom: 28px;
+        }
+
+        .lista {
+            list-style: none;
+            max-width: 640px;
+        }
+
+        .lista li {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--linea);
+        }
+
+        .lista strong {
+            font-weight: 500;
+            display: block;
+        }
+
+        .lista small {
+            color: var(--suave);
+        }
+
+        .lista .precio {
+            font-family: 'Fraunces', serif;
+            white-space: nowrap;
+        }
+
+        /* Mosaico: en móvil la primera foto ocupa todo el ancho y el resto van de 2 en 2 */
+        .mosaico {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .mosaico .grande {
+            grid-column: span 2;
+            aspect-ratio: 16 / 10;
+        }
+
+        /* Cita */
+        .cita {
+            background: var(--tinta);
+            color: var(--crema);
+        }
+
+        .cita blockquote {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(1.4rem, 4vw, 2rem);
+            max-width: 28ch;
+            line-height: 1.35;
+        }
+
+        .cita p {
+            margin-top: 20px;
+            color: #b9aea1;
+            font-size: .9rem;
+        }
+
+        /* Contacto */
+        .contacto {
+            display: grid;
+            gap: 32px;
+        }
+
+        .contacto table {
+            border-collapse: collapse;
+        }
+
+        .contacto td {
+            padding: 6px 24px 6px 0;
+        }
+
+        .contacto td:first-child {
+            color: var(--suave);
+        }
+
+        /* Pie con margen inferior para que el botón flotante no tape el texto */
+        footer {
+            border-top: 1px solid var(--linea);
+            padding: 24px 0 96px;
+            font-size: .85rem;
+            color: var(--suave);
+        }
+
+        /* Botón flotante de WhatsApp, respetando la barra inferior del iPhone */
+        .flotante {
+            position: fixed;
+            right: 18px;
+            bottom: calc(18px + env(safe-area-inset-bottom));
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #25a35a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, .25);
+        }
+
+        .flotante svg {
+            width: 26px;
+            height: 26px;
+            fill: #fff;
+        }
+
+        /* TABLET Y ORDENADOR (800 px o más) */
+        @media (min-width: 800px) {
+            section {
+                padding: 80px 0;
+            }
+
+            header .wrap {
+                flex-wrap: nowrap;
+            }
+
+            nav {
+                gap: 24px;
+            }
+
+            .portada {
+                grid-template-columns: 1.1fr .9fr;
+                gap: 56px;
+            }
+
+            .mosaico {
+                grid-template-columns: 2fr 1fr 1fr;
+                gap: 12px;
+            }
+
+            .mosaico .grande {
+                grid-column: auto;
+                grid-row: span 2;
+                aspect-ratio: auto;
+                min-height: 260px;
+            }
+
+            .contacto {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* PANTALLAS GRANDES (iMac, monitores anchos) */
+        @media (min-width: 1280px) {
+            html {
+                font-size: 112.5%;
+            }
+
+            .wrap {
+                max-width: 1180px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="wrap">
+            <a class="logo" href="#">Peluquería Ejemplo</a>
+            <nav>
+                <a href="#servicios">Servicios</a>
+                <a href="#trabajos">Trabajos</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- PORTADA -->
+        <div class="wrap portada">
+            <div>
+                <p class="etiqueta">Peluquería · La Legua, Toledo</p>
+                <h1>Tu pelo, como tú lo imaginas.</h1>
+                <p>Corte, color y mechas en el barrio, con tiempo para escucharte. Pide tu cita por WhatsApp en un
+                    minuto.</p>
+                <!-- CAMBIAR: 34 + teléfono sin espacios -->
+                <a class="boton" href="https://wa.me/34600000000?text=Hola%2C%20quiero%20pedir%20cita">Pedir cita por
+                    WhatsApp</a>
+            </div>
+            <!-- CAMBIAR: <div class="img vertical"><img src="fotos/salon.jpg" alt="Interior de la peluquería"></div> -->
+            <div class="img vertical" role="img" aria-label="Foto del salón"></div>
+        </div>
+
+        <!-- SERVICIOS -->
+        <section id="servicios">
+            <div class="wrap">
+                <p class="etiqueta">Servicios</p>
+                <h2>Carta de servicios</h2>
+                <ul class="lista">
+                    <li><span><strong>Corte mujer</strong><small>Lavado, corte y secado</small></span><span
+                            class="precio">desde 18 €</span></li>
+                    <li><span><strong>Corte hombre</strong><small>Clásico, degradado o a tijera</small></span><span
+                            class="precio">desde 10 €</span></li>
+                    <li><span><strong>Color</strong><small>Tinte completo y retoque de raíz</small></span><span
+                            class="precio">desde 30 €</span></li>
+                    <li><span><strong>Mechas y balayage</strong><small>Con tratamiento incluido</small></span><span
+                            class="precio">desde 55 €</span></li>
+                    <li><span><strong>Peinados y recogidos</strong><small>Bodas y eventos, con cita
+                                previa</small></span><span class="precio">consultar</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- TRABAJOS -->
+        <section id="trabajos" style="padding-top:0">
+            <div class="wrap">
+                <p class="etiqueta">Trabajos</p>
+                <h2>Algunos de nuestros trabajos</h2>
+                <!-- CAMBIAR: usar fotos reales del negocio, con permiso -->
+                <div class="mosaico">
+                    <div class="img grande" role="img" aria-label="Trabajo 1"></div>
+                    <div class="img horizontal" role="img" aria-label="Trabajo 2"></div>
+                    <div class="img horizontal" role="img" aria-label="Trabajo 3"></div>
+                    <div class="img horizontal" role="img" aria-label="Trabajo 4"></div>
+                    <div class="img horizontal" role="img" aria-label="Trabajo 5"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CITA DE UNA CLIENTA -->
+        <section class="cita">
+            <div class="wrap">
+                <!-- CAMBIAR: poner una reseña real de Google, con permiso -->
+                <blockquote>«Es la única peluquería donde me han dejado el color como yo quería.»</blockquote>
+                <p>Reseña en Google</p>
+            </div>
+        </section>
+
+        <!-- CONTACTO -->
+        <section id="contacto">
+            <div class="wrap contacto">
+                <div>
+                    <p class="etiqueta">Contacto</p>
+                    <h2>Dónde estamos</h2>
+                    <!-- CAMBIAR: dirección exacta del negocio -->
+                    <p>Av. de la Legua, 3, Toledo</p>
+                    <!-- CAMBIAR: coordenadas (query) y place_id del negocio -->
+                    <p style="margin-top:12px"><a
+                            href="https://www.google.com/maps/search/?api=1&query=39.889239,-4.062426&query_place_id=ChIJzWY10MkKag0R1sLSwN-mlug">Cómo
+                            llegar</a></p>
+                </div>
+                <div>
+                    <h3 style="margin-bottom:16px;font-size:1.3rem">Horario</h3>
+                    <table>
+                        <tr>
+                            <td>Lunes a viernes</td>
+                            <td>9:30 – 19:30</td>
+                        </tr>
+                        <tr>
+                            <td>Sábado</td>
+                            <td>10:00 – 14:00</td>
+                        </tr>
+                        <tr>
+                            <td>Domingo</td>
+                            <td>Cerrado</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="wrap">© 2026 Peluquería Ejemplo</div>
+    </footer>
+
+    <a class="flotante" href="https://wa.me/34600000000" aria-label="Escribir por WhatsApp">
+        <svg viewBox="0 0 24 24">
+            <path d="M4 3h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H9l-5 4V4a1 1 0 0 1 1-1z" />
+        </svg>
+    </a>
+
+</body>
+
+</html>
